@@ -1,31 +1,37 @@
+import "./index.css";
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import Dashboard from "@/pages/Dashboard.jsx"; // หน้าเลือกวิดีโอที่คุณมีอยู่
+import ProductsPage from "@/pages/Products.jsx";
 
-function App() {
-  const [count, setCount] = useState(0);
+import { Button } from "@/components/ui/button";
+import { Package, Radio } from "lucide-react";
+
+export default function App() {
+  const [page, setPage] = useState("dashboard"); // 'dashboard' | 'products'
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="min-h-screen">
+      {/* Simple topbar */}
+      <div className="border-b">
+        <div className="container py-3 flex items-center gap-2">
+          <Button
+            variant={page === "dashboard" ? "default" : "outline"}
+            onClick={()=>setPage("dashboard")}
+            className="gap-2"
+          >
+            <Radio className="w-4 h-4" /> Live
+          </Button>
+          <Button
+            variant={page === "products" ? "default" : "outline"}
+            onClick={()=>setPage("products")}
+            className="gap-2"
+          >
+            <Package className="w-4 h-4" /> Products
+          </Button>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>count is {count}</button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">Click on the Vite and React logos to learn more</p>
-    </>
+
+      {page === "dashboard" ? <Dashboard /> : <ProductsPage />}
+    </div>
   );
 }
-
-export default App;
